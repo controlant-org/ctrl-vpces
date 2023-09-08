@@ -10,7 +10,8 @@ The name is also a pun on [our company name](https://controlant.com/).
 
 - Run the controller with desired tag names
 - Apply tags to AWS VPC Endpoint Services
-- The controller will manage Allowed Principals
+- The controller will manage Allowed Principals based on AWS Accounts discovered from the root-account defined via the `--root-role`.
+- The controller does not remove principals at this time.
 
 ## Detail
 
@@ -63,6 +64,7 @@ data "aws_iam_policy_document" "perms" {
 - TODO: use distributed tracing
 - TODO: tests
 - MAYBE: add tag to define filter on principals (accounts) to add
+- MAYBE: add Name tag (account-name) to principal entries for clarity in UI
 
 # Debug
 
