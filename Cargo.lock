@@ -53,7 +53,7 @@ dependencies = [
  "aws-credential-types",
  "aws-http",
  "aws-sdk-sso",
- "aws-sdk-sts",
+ "aws-sdk-sts 0.30.0",
  "aws-smithy-async",
  "aws-smithy-client",
  "aws-smithy-http",
@@ -130,9 +130,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-ec2"
-version = "0.30.0"
+version = "0.31.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dcb3e58549904567dcbfadb1e450b5a0f46f35300dd78c87a31ca4761d1481f6"
+checksum = "51b2f9409448aac3336e1c4ec712a73e532acd89d5adeeb4ad6f798dd69112c5"
 dependencies = [
  "aws-credential-types",
  "aws-http",
@@ -156,9 +156,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-organizations"
-version = "0.30.0"
+version = "0.31.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "49498725e7eaf7b52ff8b9f850daeca21cabd1e6db7451b6b542c342ed3b4421"
+checksum = "9c3581bc0c3a569e02e3186f3a142527cc286f1f65ff1912f342b8163048b2fc"
 dependencies = [
  "aws-credential-types",
  "aws-http",
@@ -207,6 +207,30 @@ name = "aws-sdk-sts"
 version = "0.30.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a47ad6bf01afc00423d781d464220bf69fb6a674ad6629cbbcb06d88cdc2be82"
+dependencies = [
+ "aws-credential-types",
+ "aws-http",
+ "aws-runtime",
+ "aws-smithy-async",
+ "aws-smithy-client",
+ "aws-smithy-http",
+ "aws-smithy-json",
+ "aws-smithy-query",
+ "aws-smithy-runtime",
+ "aws-smithy-runtime-api",
+ "aws-smithy-types",
+ "aws-smithy-xml",
+ "aws-types",
+ "http",
+ "regex",
+ "tracing",
+]
+
+[[package]]
+name = "aws-sdk-sts"
+version = "0.31.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "0c9ae1be8d5a934e61e42e739612a0173508eda3f78921337831bf57b65f0cff"
 dependencies = [
  "aws-credential-types",
  "aws-http",
@@ -542,6 +566,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "cd7cc57abe963c6d3b9d8be5b06ba7c8957a930305ca90304f24ef040aa6f961"
 
 [[package]]
+name = "control-aws"
+version = "0.1.0"
+source = "git+https://github.com/controlant-org/control-aws.git?rev=cb73371#cb73371cb6bd78a97d32b80131b4f3ad7ad55ddb"
+dependencies = [
+ "aws-config",
+ "aws-sdk-organizations",
+ "aws-smithy-http",
+ "aws-types",
+ "http",
+ "thiserror",
+ "tokio",
+ "tokio-stream",
+]
+
+[[package]]
 name = "core-foundation"
 version = "0.9.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -583,10 +622,10 @@ dependencies = [
  "anyhow",
  "aws-config",
  "aws-sdk-ec2",
- "aws-sdk-organizations",
- "aws-sdk-sts",
+ "aws-sdk-sts 0.31.1",
  "aws-types",
  "clap",
+ "control-aws",
  "env_logger",
  "log",
  "tokio",
@@ -1391,6 +1430,26 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "be55cf8942feac5c765c2c993422806843c9a9a45d4d5c407ad6dd2ea95eb9b6"
 dependencies = [
  "winapi-util",
+]
+
+[[package]]
+name = "thiserror"
+version = "1.0.49"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1177e8c6d7ede7afde3585fd2513e611227efd6481bd78d2e82ba1ce16557ed4"
+dependencies = [
+ "thiserror-impl",
+]
+
+[[package]]
+name = "thiserror-impl"
+version = "1.0.49"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "10712f02019e9288794769fba95cd6847df9874d49d871d062172f9dd41bc4cc"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]
