@@ -6,7 +6,6 @@ use std::sync::Arc;
 use std::time::Duration;
 use tokio::task::JoinSet;
 use tokio::time::sleep;
-use tokio_stream::StreamExt;
 
 mod cli;
 mod controller;
@@ -19,10 +18,7 @@ async fn main() -> Result<()> {
 
   loop {
     let base_aws_config = aws_config::load_from_env().await;
-    let base_region = base_aws_config
-      .region()
-      .unwrap()
-      .to_owned();
+    let base_region = base_aws_config.region().unwrap().to_owned();
 
     let regions = app.regions.clone().unwrap_or(vec![base_region.clone()]);
 
@@ -65,7 +61,12 @@ async fn main() -> Result<()> {
         }
       }
       AuthMode::Discover(ref root_role, ref sub_role) => {
-        let accounts = discover_accounts(root_role, base_region).await?;
+        // TODO: provide domain and/or tier based filtering
+        let accounts = discover_accounts(root_role, base_region)
+          .await?
+          .into_iter()
+          .map(|a| a.id)
+          .collect::<Vec<_>>();
 
         for acc in accounts.iter() {
           for region in regions.iter() {
@@ -108,7 +109,7 @@ async fn main() -> Result<()> {
   Ok(())
 }
 
-async fn discover_accounts(root_role: &Option<String>, region: Region) -> Result<Vec<String>> {
+async fn discover_accounts(root_role: &Option<String>, region: Region) -> Result<Vec<control_aws::org::Account>> {
   let config = match root_role {
     Some(root_role) => {
       let provider = AssumeRoleProvider::builder(root_role)
@@ -125,19 +126,5 @@ async fn discover_accounts(root_role: &Option<String>, region: Region) -> Result
     None => aws_config::load_from_env().await,
   };
 
-  let org = aws_sdk_organizations::Client::new(&config);
-  let mut lc_stream = org.list_accounts().into_paginator().send();
-
-  let mut accounts = Vec::new();
-  while let Some(p) = lc_stream.next().await {
-    p.expect("failed to list accounts")
-      .accounts
-      .expect("failed to extract accounts")
-      .into_iter()
-      .for_each(|a| {
-        accounts.push(a.id.expect("failed to extract account ID"));
-      });
-  }
-
-  Ok(accounts)
+  Ok(control_aws::org::discover_accounts(config).await?)
 }
