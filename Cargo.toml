@@ -1,6 +1,6 @@
 [package]
 name = "ctrl-vpces"
-version = "0.1.0"
+version = "0.2.0"
 authors = [
   "LOU Xun <xun.lou@controlant.com>",
   "Olafur Gislason <olafur.gislason@controlant.com>",
