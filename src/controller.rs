@@ -1,8 +1,7 @@
 use anyhow::Result;
 use aws_sdk_ec2::types::Filter;
 use aws_types::sdk_config::SdkConfig;
-use log::{debug, info, trace, error};
-use tokio_stream::StreamExt;
+use log::{debug, error, info, trace};
 
 use crate::cli::App;
 
@@ -26,6 +25,7 @@ pub async fn run(config: SdkConfig, app: &App, accounts: Vec<String>) -> Result<
     }
   }
 
+  // TODO: provide domain and/or tier based filtering
   let principals: Vec<String> = accounts
     .iter()
     .map(|acct_id| format!("arn:aws:iam::{}:root", acct_id))
@@ -48,23 +48,17 @@ pub async fn run(config: SdkConfig, app: &App, accounts: Vec<String>) -> Result<
       .modify_vpc_endpoint_service_permissions()
       .service_id(&svc_id)
       .set_add_allowed_principals(Some(principals.clone()))
-      .send().await {
-      
+      .send()
+      .await
+    {
       Ok(_) => {
         info!("updated principals for {}", &svc_id)
       }
       Err(e) => {
-        error!("failed to update principals for {}: {}", &svc_id, e.to_string())
+        error!("failed to update principals for {}: {:?}", &svc_id, e)
       }
     }
   }
 
   Ok(())
-}
-
-#[cfg(test)]
-mod tests {
-  // use super::*;
-
-  // TODO: test garbage tag value
 }
