@@ -28,5 +28,5 @@ tokio = { version = "1", features = ["full"] }
 control-aws = { git = "https://github.com/controlant-org/control-aws.git", rev = "41f33f5" }
 aws-types = "1"
 aws-config = "1"
-aws-sdk-ec2 = "0.39"
-aws-sdk-sts = "0.39"
+aws-sdk-ec2 = "1.3"
+aws-sdk-sts = "1.3"
