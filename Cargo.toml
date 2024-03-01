@@ -2,8 +2,8 @@
 name = "ctrl-vpces"
 version = "0.2.0"
 authors = [
-  "LOU Xun <xun.lou@controlant.com>",
   "Olafur Gislason <olafur.gislason@controlant.com>",
+  "LOU Xun <xun.lou@controlant.com>",
 ]
 description = "Allowed Principals controller for AWS VPC Endpoint Services"
 edition = "2021"
@@ -18,15 +18,15 @@ clap = { version = "4", default-features = false, features = [
   "error-context",
 ] }
 log = "0.4"
-env_logger = "0.10"
+env_logger = "0.11"
 fastrand = "2"
 
 # Runtime
 tokio = { version = "1", features = ["full"] }
 
 # AWS
-control-aws = { git = "https://github.com/controlant-org/control-aws.git", rev = "41f33f5" }
+control-aws = { git = "https://github.com/controlant-org/control-aws.git", rev = "b26c6b7" }
 aws-types = "1"
 aws-config = "1"
-aws-sdk-ec2 = "0.39"
-aws-sdk-sts = "0.39"
+aws-sdk-ec2 = "1"
+aws-sdk-sts = "1"
